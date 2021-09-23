@@ -33,12 +33,10 @@ class BookController extends Controller
                return $data;
             });
 
-            dd($formatData);
+        
         //If the parameter name exist
         if ($name) {
             $data = collect($formatData);
-
-            dd($formatData);
 
             $formatData = $data->filter(function ($item){
                   return $item->name == $name;
