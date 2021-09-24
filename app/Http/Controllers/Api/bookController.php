@@ -170,11 +170,11 @@ class BookController extends Controller
 
          // Let's Map the results  for formattage of data
          $formatData = $books->map(function ($item) use ($from) {
-                $data['id'] = $item->id;
                 $data['name'] = $item->name;
                 $data['isbn'] = $item->isbn;
                 //if $from is 1 data coming from internal and other if from external
                 if($from == 1){
+                    $data['id'] = $item->id;
                     $data['authors'] = $item->authors->map(function($value){
                           return $value->name;
                     });
