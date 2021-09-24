@@ -89,6 +89,41 @@ class BookController extends Controller
         ],200);
     }
 
+    public function updateBook(Request $request, $id)
+    {
+
+        $this->validate($request,[
+            'name' => 'required',
+            'isbn' => 'required',
+            'country' => 'required',
+            'authors' => 'required',
+            'number_of_pages' => 'required|numeric',
+            'publisher' => 'required',
+            'release_date' => 'required',
+        ]);
+
+        $book = Book::whereId($id)->with('authors')->first();
+        $book->name = $request->name;
+        $book->isbn = $request->isbn;
+        $book->country = $request->country;
+        $book->number_of_pages = $request->number_of_pages;
+        $book->publisher = $request->publisher;
+        $book->release_date = $request->release_date;
+        $book->save();
+
+        $data= Book::whereId($id)->with('authors')->get();
+
+        $data = $this->formattageResponse($data,1);
+
+        return Response::json([
+            "status_code" => 200, 
+            "status" => "success",
+            "message" => $book->name ." was updated successfully",
+            "data" => $data->first()
+        ],200);
+
+    }
+
     public function formattageResponse($books, $from)
     {
          $data = [];
@@ -109,8 +144,11 @@ class BookController extends Controller
                 }
                 $data['publisher'] = $item->publisher;
                 $data['country'] = $item->country;
-                $data['release_date'] = date('Y-m-d', strtotime($item->released));
- 
+                if($from == 1){
+                  $data['release_date'] = date('Y-m-d', strtotime($item->release_date));
+                }else{
+                    $data['release_date'] = date('Y-m-d', strtotime($item->released));
+                }
                 return $data;
              });
         
