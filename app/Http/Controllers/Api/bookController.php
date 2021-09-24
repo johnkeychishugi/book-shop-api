@@ -34,7 +34,7 @@ class BookController extends Controller
             'data' => $data
         ], 200);
     }
-
+    //Create a book in local database
     public function createBook(Request $request)
     {
         $this->validate($request,[
@@ -75,7 +75,7 @@ class BookController extends Controller
             'data' => $data
         ],201);
     }
-
+    //Get all books in database
     public function getBooks()
     {
         $books = Book::with('authors')->get();
@@ -88,7 +88,7 @@ class BookController extends Controller
             'data' => $data
         ],200);
     }
-
+    //update a book in local database
     public function updateBook(Request $request, $id)
     {
 
@@ -123,7 +123,47 @@ class BookController extends Controller
         ],200);
 
     }
+    //Delete a book in local database
+    public function deleteBook($id)
+    {
+        $book = Book::whereId($id)->with('authors')->first();
 
+       if($book){
+        $bookName = $book->name;
+        $book->delete();
+        $status = 200;
+        $response = [
+            "status_code" => 200, 
+            "status" => "success",
+            "message" => $bookName ." was deleted successfully",
+            "data" => []
+        ];
+       }else{
+        $status = 404;
+        $response = [
+            "status_code" => 404, 
+            "status" => "Not Found",
+            "message" => "Book not found in the database",
+        ];
+       }
+
+        return Response::json($response,$status);
+
+    }
+    //Get a single book in local database
+    public function getBook($id)
+    {
+        $book = Book::whereId($id)->with('authors')->get();
+
+        $data = $this->formattageResponse($book,1);
+
+        return Response::json([
+            "status_code" => 200, 
+            "status" => "success",
+            "data" => $data->first()
+        ],200);
+    }
+    //Formattage fo data for the response purpose for both external and local data
     public function formattageResponse($books, $from)
     {
          $data = [];
