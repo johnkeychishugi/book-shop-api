@@ -24,6 +24,6 @@ Route::group(['prefix' => 'v1' ], function(){
     Route::get('/external-books',[BookController::class, 'getBooksExternalApi']);
     Route::post('/books',[BookController::class, 'createBook']);  
     Route::get('/books',[BookController::class, 'getBooks']);
-
+    Route::patch('/books/{id}',[BookController::class,'updateBook']);
 });
  
