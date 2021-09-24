@@ -25,5 +25,7 @@ Route::group(['prefix' => 'v1' ], function(){
     Route::post('/books',[BookController::class, 'createBook']);  
     Route::get('/books',[BookController::class, 'getBooks']);
     Route::patch('/books/{id}',[BookController::class,'updateBook']);
+    Route::delete('/books/{id}',[BookController::class,'deleteBook']);
+
 });
  
