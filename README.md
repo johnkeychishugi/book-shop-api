@@ -20,8 +20,14 @@ Book shop is an API for retrieving books from one external API combine with the 
 ### Get start now
 
 - `git clone https://github.com/johnkeychishugi/book-shop-api.git`
+- `cd in the project directory`
 - `create a file called .env (you can copy the content of .env.example)`
-- `Provide the information the database in .env => DB_CONNECTION=mysql DB_HOST=127.0.0.1 DB_PORT=3306 DB_DATABASE=<DATABASE NAME>DB_USERNAME=<DATABASE USERNAME> DB_PASSWORD=<DATABASE PASSWORD>`
+- `composer install`
+- `composer dumpautoload -o`
+- `Provide the information of the database in .env => DB_CONNECTION=mysql DB_HOST=127.0.0.1 DB_PORT=3306 DB_DATABASE=<DATABASE NAME>DB_USERNAME=<DATABASE USERNAME> DB_PASSWORD=<DATABASE PASSWORD>`
+- `php artisan key:generate`
+- `php artisan config:clear`
+- `php artisan config:cache`
 - `php artisan migrate`
 - `npm install`
 - `npm install vue vue-router vue-axios --save`
