@@ -16,17 +16,13 @@ use App\Http\Controllers\Api\BookController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/external-books',[BookController::class, 'getBooksExternalApi']);
 
 Route::group(['prefix' => 'v1' ], function(){
-    Route::get('/external-books',[BookController::class, 'getBooksExternalApi']);
     Route::post('/books',[BookController::class, 'createBook']);  
     Route::get('/books',[BookController::class, 'getBooks']);
     Route::patch('/books/{id}',[BookController::class,'updateBook']);
     Route::delete('/books/{id}',[BookController::class,'deleteBook']);
     Route::get('/books/{id}',[BookController::class,'getBook']);
-
 });
  
